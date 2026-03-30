@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>विवाह निमंत्रण</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Mangal, Arial, sans-serif;
+    background:linear-gradient(135deg,#2b0a1a,#7a003c,#b30059);
+    overflow:hidden;
+    color:white;
+}
+
+/* PAGE */
+.page{
+    width:100%;
+    height:100vh;
+    position:absolute;
+    top:0;
+    left:0;
+    text-align:center;
+    padding:50px 20px;
+}
+
+#page1{ z-index:2; }
+#page2{ display:none; }
+
+/* TITLE */
+h1{
+    font-size:42px;
+    background:linear-gradient(gold,#ffd700,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* NAMES */
+.names{
+    font-size:38px;
+    font-weight:bold;
+    margin-top:30px;
+    text-shadow:0 0 10px gold,0 0 25px gold;
+}
+
+/* TEXT */
+.quote{
+    font-size:20px;
+    margin-top:25px;
+    line-height:1.6;
+}
+
+/* 🔥 BOTH PAGE TEXT BLACK */
+#page1 .quote,
+#page2 .quote{
+    color:black;
+}
+
+/* BUTTON */
+button{
+    margin-top:40px;
+    padding:14px 40px;
+    font-size:20px;
+    border:none;
+    border-radius:40px;
+    background:gold;
+    color:black;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,215,0,0.6);
+}
+button:hover{
+    transform:scale(1.1);
+}
+
+/* EVENT */
+.event{
+    background:rgba(255,255,255,0.2);
+    border:1px solid gold;
+    max-width:600px;
+    margin:20px auto;
+    padding:22px;
+    border-radius:20px;
+    font-size:22px;
+    color:black; /* event text black */
+}
+
+/* HEARTS */
+.heart{
+    position:fixed;
+    bottom:-30px;
+    font-size:22px;
+    animation:floatUp 6s linear infinite;
+}
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:0;}
+    10%{opacity:1;}
+    100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* FIREWORKS */
+.firework{
+    position:fixed;
+    width:6px;
+    height:6px;
+    background:gold;
+    border-radius:50%;
+    animation:explode 1.5s linear infinite;
+}
+@keyframes explode{
+    0%{transform:scale(0);}
+    50%{transform:scale(2);}
+    100%{transform:scale(0);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio autoplay loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+</audio>
+
+<!-- ❤️ HEARTS -->
+<script>
+for(let i=0;i<15;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"%";
+    h.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(h);
+}
+</script>
+
+<!-- 🎆 FIREWORKS -->
+<script>
+for(let i=0;i<20;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.top=Math.random()*100+"%";
+    f.style.left=Math.random()*100+"%";
+    f.style.animationDelay=Math.random()*3+"s";
+    document.body.appendChild(f);
+}
+</script>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+    <h1>👑 विवाह निमंत्रण 👑</h1>
+    <p>॥ श्री गणेशाय नमः ॥</p>
+
+    <div class="names">
+        रवि सिंह 💖 खुशबू सिंह
+    </div>
+
+    <p class="quote">
+        "दो दिलों का मिलन,<br>
+        प्रेम और विश्वास से सजा एक पवित्र बंधन"
+    </p>
+
+    <p class="quote">
+        कृपया सपरिवार पधारकर हमें आशीर्वाद दें
+    </p>
+
+    <button onclick="openSecondPage()">✨ कार्यक्रम देखें</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <h1>🎆 विवाह कार्यक्रम 🎆</h1>
+
+    <div class="event">
+        💐 शुभ तिलक<br>🌸 25 अप्रैल 2026
+    </div>
+
+    <div class="event">
+        🌼 शुभ हल्दी<br>🌸 26 अप्रैल 2026
+    </div>
+
+    <div class="event">
+        💍 शुभ विवाह<br>🌸 28 अप्रैल 2026
+    </div>
+
+    <p class="quote">
+        🙏 आपकी उपस्थिति हमारे लिए सौभाग्य होगी 🙏
+    </p>
+
+    <button onclick="goBack()">⬅️ वापस जाएँ</button>
+</div>
+
+<script>
+function openSecondPage(){
+    document.getElementById("page1").style.display="none";
+    document.getElementById("page2").style.display="block";
+}
+function goBack(){
+    document.getElementById("page2").style.display="none";
+    document.getElementById("page1").style.display="block";
+}
+
+/* SWIPE */
+let startX=0;
+document.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
+document.addEventListener("touchend",e=>{
+    let endX=e.changedTouches[0].clientX;
+    if(startX - endX > 50){ openSecondPage(); }
+    if(endX - startX > 50){ goBack(); }
+});
+</script>
+
+</body>
+</html>
